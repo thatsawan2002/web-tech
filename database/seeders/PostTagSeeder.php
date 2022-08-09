@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Comment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Tag;
+use App\Models\Post;
 
-class CommentSeeder extends Seeder
+class PostTagSeeder extends Seeder
 {
-    use WithoutModelEvents;
     /**
      * Run the database seeds.
      *
@@ -16,6 +16,10 @@ class CommentSeeder extends Seeder
      */
     public function run()
     {
-        Comment::factory(2000)->create();
+        $posts = Post::all();
+        $tags = Tag::all();
+        foreach ($posts as $post) {
+            $post->tags()->sync($tags->random(rand(1, 3)));
+        }
     }
 }
